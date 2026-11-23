@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brainstorm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg: #f9f4ec;
+  --surface: #fffbf6;
+  --fg: #211c19;
+  --muted: #625951;
+  --line: #ddd4c9;
+  --soft: #f0e8de;
+  --accent: #e9682a;
+  --accent-soft: #ffe4d5;
+  --accent-fg: #8a2e0c;
+  --ok: #2c6e45;
+  --ok-soft: #e4f1e7;
+  --font: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1714; --surface: #24201c; --fg: #f3ece4; --muted: #b3a89c; --line: #3a332d;
+    --soft: #2e2823; --accent: #ff8a4c; --accent-soft: #3d2518; --accent-fg: #ffc7a8;
+    --ok: #8fd3a5; --ok-soft: #1f3226; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1714; --surface: #24201c; --fg: #f3ece4; --muted: #b3a89c; --line: #3a332d;
+  --soft: #2e2823; --accent: #ff8a4c; --accent-soft: #3d2518; --accent-fg: #ffc7a8;
+  --ok: #8fd3a5; --ok-soft: #1f3226; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 15px/1.5 var(--font); -webkit-font-smoothing: antialiased; }
+.wrap {
+  max-width: 980px; margin: 0 auto; display: grid; gap: 56px;
+  padding-block: 48px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+code { font-family: var(--mono); font-size: 0.86em; background: var(--soft); padding: 1px 5px; border-radius: 5px; }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+.muted { color: var(--muted); }
+
+header.top { display: grid; gap: 12px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; color: var(--muted); }
+.meta span { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+header.top h1 { font-size: 36px; line-height: 1.12; letter-spacing: -0.03em; font-weight: 700; }
+
+section { display: grid; gap: 20px; }
+.sec-head { display: grid; gap: 4px; border-top: 1px solid var(--line); padding-top: 18px; }
+.sec-head h2 { font-size: 22px; letter-spacing: -0.015em; font-weight: 650; }
+.sec-head p { color: var(--muted); }
+
+.versus { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.pane { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.pane h3 { font-size: 13px; font-weight: 600; color: var(--muted); }
+.quote { border-left: 3px solid var(--accent); padding: 2px 0 2px 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.findings { background: var(--soft); border-radius: 12px; padding: 14px 16px; display: grid; gap: 8px; }
+.findings h3 { font-size: 13px; font-weight: 600; color: var(--muted); }
+
+.proposal { display: grid; gap: 16px; }
+.proposal .summary { font-size: 17px; line-height: 1.5; max-width: 68ch; }
+.shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+.shots.wide { grid-template-columns: minmax(0, 1fr); }
+figure { margin: 0; display: grid; gap: 8px; min-width: 0; }
+figure img { width: 100%; max-width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); display: block; }
+figcaption { font-size: 13px; color: var(--muted); }
+
+.items-group { display: grid; gap: 12px; }
+.items-group > h3 { font-size: 15px; font-weight: 600; color: var(--muted); }
+.items { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+.item { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+.item.wide { grid-column: 1 / -1; }
+.item header { padding: 14px 16px 12px; display: grid; gap: 4px; border-bottom: 1px solid var(--line); }
+.item .t { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.item .badge { margin-left: auto; font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--accent-fg); white-space: nowrap; }
+.item .d { font-size: 13px; color: var(--muted); }
+.item iframe { display: block; width: 100%; height: 160px; border: 0; background: transparent; }
+.item img { display: block; width: 100%; height: auto; }
+
+.q { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: grid; gap: 14px; }
+.q-head { display: grid; gap: 4px; }
+.q-head .n { font-size: 12px; font-weight: 600; color: var(--accent-fg); }
+.q-head h3 { font-size: 18px; font-weight: 650; letter-spacing: -0.01em; }
+.q-head .why { color: var(--muted); font-size: 14px; }
+.q-head .mode { font-size: 12px; color: var(--muted); }
+.opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.opt { border: 1.5px solid var(--line); border-radius: 14px; background: var(--bg); display: grid; align-content: start; transition: border-color 160ms var(--ease), background-color 160ms var(--ease); min-width: 0; }
+.opt > button { all: unset; box-sizing: border-box; cursor: pointer; display: grid; gap: 4px; padding: 14px 14px 12px; border-radius: 12px; }
+.opt > button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.opt .lbl { display: flex; align-items: flex-start; gap: 10px; font-weight: 600; }
+.opt .dot { width: 18px; height: 18px; flex: none; margin-top: 2px; border: 2px solid var(--line); border-radius: 999px; display: grid; place-items: center; }
+.opt.multi .dot { border-radius: 5px; }
+.opt .desc { font-size: 13.5px; color: var(--muted); padding-left: 28px; overflow-wrap: anywhere; }
+.opt .rec { font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 6px; background: var(--ok-soft); color: var(--ok); margin-left: auto; white-space: nowrap; }
+.opt[aria-checked="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.opt[aria-checked="true"] .dot { border-color: var(--accent); background: var(--accent); box-shadow: inset 0 0 0 3px var(--accent-soft); }
+.q-detail { display: grid; gap: 6px; }
+.q-detail label { font-size: 13px; font-weight: 500; color: var(--muted); }
+.q-detail textarea { width: 100%; min-height: 64px; resize: vertical; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); padding: 10px 12px; font-size: 14px; }
+
+.theme-toggle {
+  position: fixed; z-index: 10;
+  top: max(16px, env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; place-items: center; width: 40px; height: 40px; padding: 0;
+  border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg);
+  cursor: pointer; box-shadow: 0 4px 14px -6px rgb(0 0 0 / 0.25);
+  transition: transform 160ms var(--ease);
+}
+.theme-toggle:active { transform: scale(0.97); }
+.theme-toggle svg { width: 18px; height: 18px; }
+
+.finish { display: grid; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px; }
+.finish h2 { font-size: 20px; font-weight: 650; }
+.progress { font-size: 14px; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 22px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); font-weight: 600; cursor: pointer; transition: transform 160ms var(--ease), filter 160ms var(--ease); }
+.btn:active { transform: scale(0.97); }
+.btn.primary { color: #fff; background: linear-gradient(180deg, #f39a60 0%, #e9682a 100%); border-color: #e2662a; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28), 0 6px 16px -4px rgb(232 91 43 / 0.35); }
+.btn.primary:hover { filter: brightness(1.04); }
+.status { font-size: 13px; color: var(--ok); min-height: 18px; }
+#fallback { width: 100%; min-height: 180px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); padding: 12px; font: 12.5px/1.5 var(--mono); }
+.err { padding: 16px; border-radius: 12px; background: var(--accent-soft); color: var(--accent-fg); }
+
+@media (prefers-reduced-motion: reduce) { * { transition-duration: 0.01ms !important; } }
+</style>
+<script>
+  try { var t = localStorage.getItem('brainstorm-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
+</head>
+<body>
+
+<button class="theme-toggle" type="button" id="theme-toggle"></button>
+<main class="wrap" id="app"></main>
+
+<script id="brainstorm-data" type="application/json">__BRAINSTORM_DATA__</script>
+<script>
+(function () {
+  var app = document.getElementById('app');
+  var data, answers = {};
+  var KEY = 'brainstorm-answers-v2';
+
+  var root = document.documentElement, toggle = document.getElementById('theme-toggle');
+  var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+  var MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
+  function isDark() {
+    var t = root.getAttribute('data-theme');
+    return t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function paintToggle() {
+    var dark = isDark();
+    toggle.innerHTML = dark ? SUN : MOON;
+    toggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+  toggle.addEventListener('click', function () {
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('brainstorm-theme', next); } catch (e) {}
+    paintToggle();
+  });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paintToggle);
+  paintToggle();
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  // Tiny inline markdown: `code` and **bold** only.
+  function md(s) {
+    return esc(s).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  }
+  function list(items) {
+    return '<ul>' + (items || []).map(function (i) { return '<li>' + md(i) + '</li>'; }).join('') + '</ul>';
+  }
+  function save() { try { localStorage.setItem(KEY + ':' + data.title, JSON.stringify(answers)); } catch (e) {} }
+  function load() { try { return JSON.parse(localStorage.getItem(KEY + ':' + data.title)) || {}; } catch (e) { return {}; } }
+
+  function previewDoc(p, html, i) {
+    return '<!doctype html><html><head><meta charset="utf-8">' + (p.previewHead || '') +
+      '<style>html,body{margin:0}</style></head><body>' + html +
+      '<script>(function(){function s(){parent.postMessage({bsH:document.documentElement.scrollHeight,bsI:' + i + '},"*")}' +
+      'addEventListener("load",s);new ResizeObserver(s).observe(document.documentElement)})()<\/script></body></html>';
+  }
+
+  function renderItems(p) {
+    var items = p.items || [];
+    if (!items.length) return '';
+    var groups = [];
+    items.forEach(function (it, i) {
+      var g = groups[groups.length - 1];
+      if (!g || g.name !== (it.group || '')) groups.push(g = { name: it.group || '', html: '' });
+      g.html += '<article class="item' + (it.wide ? ' wide' : '') + '"><header><div class="t"><span>' + md(it.title) + '</span>' +
+        (it.badge ? '<span class="badge">' + esc(it.badge) + '</span>' : '') + '</div>' +
+        (it.description ? '<p class="d">' + md(it.description) + '</p>' : '') + '</header>' +
+        (it.html ? '<iframe sandbox="allow-scripts" loading="lazy" data-i="' + i + '" title="Preview: ' + esc(it.title) + '" srcdoc="' + esc(previewDoc(p, it.html, i)) + '"></iframe>'
+          : it.src ? '<img src="' + esc(it.src) + '" alt="' + esc(it.title) + '" loading="lazy">' : '') +
+        '</article>';
+    });
+    return groups.map(function (g) {
+      return '<div class="items-group">' + (g.name ? '<h3>' + md(g.name) + '</h3>' : '') + '<div class="items">' + g.html + '</div></div>';
+    }).join('');
+  }
+
+  window.addEventListener('message', function (e) {
+    if (!e.data || typeof e.data.bsH !== 'number') return;
+    var f = document.querySelector('iframe[data-i="' + e.data.bsI + '"]');
+    if (f && e.source === f.contentWindow) f.style.height = Math.min(e.data.bsH, 1200) + 'px';
+  });
+
+  function render() {
+    document.title = data.title;
+    var p = data.proposal || {};
+    var shots = (p.shots || []).filter(function (s) { return s.name || s.file; });
+    var h = '';
+    h += '<header class="top"><div class="meta">' +
+      (data.project ? '<span>' + esc(data.project) + '</span>' : '') +
+      (data.date ? '<span>' + esc(data.date) + '</span>' : '') +
+      '<span>' + (data.questions || []).length + ' question(s)</span></div>' +
+      '<h1>' + md(data.title) + '</h1></header>';
+
+    h += '<section aria-labelledby="s1"><div class="sec-head"><h2 id="s1">Your request and what I understood</h2>' +
+      '<p>On the left, what you wrote. On the right, how I read it. If the right side is wrong, say so in the questions.</p></div>' +
+      '<div class="versus"><div class="pane"><h3>Your request</h3><div class="quote">' + esc(data.request) + '</div></div>' +
+      '<div class="pane"><h3>What I understood</h3>' + list(data.understanding) + '</div></div>' +
+      (data.findings && data.findings.length ? '<div class="findings"><h3>What I found in the project</h3>' + list(data.findings) + '</div>' : '') +
+      '</section>';
+
+    h += '<section aria-labelledby="s2"><div class="sec-head"><h2 id="s2">What I propose</h2></div><div class="proposal">' +
+      (p.summary ? '<p class="summary">' + md(p.summary) + '</p>' : '') +
+      (p.points && p.points.length ? list(p.points) : '') +
+      (shots.length ? '<div class="shots' + (shots.length === 1 ? ' wide' : '') + '">' + shots.map(function (s) {
+        var src = s.src || s.file || ('shots/' + s.name + '.png');
+        return '<figure><img src="' + esc(src) + '" alt="' + esc(s.caption || s.name) + '" loading="lazy">' +
+          (s.caption ? '<figcaption>' + md(s.caption) + '</figcaption>' : '') + '</figure>';
+      }).join('') + '</div>' : '') +
+      renderItems(p) +
+      '</div></section>';
+
+    h += '<section aria-labelledby="s3"><div class="sec-head"><h2 id="s3">Questions</h2>' +
+      '<p>Pick a card for each question. Use the field under the cards to add details.</p></div>';
+    (data.questions || []).forEach(function (q, qi) {
+      var opts = (q.options || []).concat([{ id: '__other', label: 'Other', description: 'Nothing fits: explain in the field below.' }]);
+      h += '<div class="q" data-q="' + esc(q.id) + '"><div class="q-head"><span class="n">Question ' + (qi + 1) + '</span>' +
+        '<h3 id="q-' + esc(q.id) + '">' + md(q.question) + '</h3>' +
+        (q.why ? '<p class="why">' + md(q.why) + '</p>' : '') +
+        (q.multi ? '<span class="mode">Several choices allowed</span>' : '') +
+        '</div><div class="opts" role="' + (q.multi ? 'group' : 'radiogroup') + '" aria-labelledby="q-' + esc(q.id) + '">';
+      opts.forEach(function (o) {
+        h += '<div class="opt' + (q.multi ? ' multi' : '') + '" data-o="' + esc(o.id) + '" aria-checked="false">' +
+          '<button type="button" role="' + (q.multi ? 'checkbox' : 'radio') + '" aria-checked="false">' +
+          '<span class="lbl"><span class="dot" aria-hidden="true"></span><span>' + md(o.label) + '</span>' +
+          (o.recommended ? '<span class="rec">Recommended</span>' : '') + '</span>' +
+          (o.description ? '<span class="desc">' + md(o.description) + '</span>' : '') +
+          '</button></div>';
+      });
+      h += '</div><div class="q-detail"><label for="d-' + esc(q.id) + '">Details (optional)</label>' +
+        '<textarea id="d-' + esc(q.id) + '" rows="2" placeholder="A nuance, a constraint, what you want instead…"></textarea></div></div>';
+    });
+    h += '</section>';
+
+    h += '<section aria-labelledby="s4" class="finish"><h2 id="s4">Send my answers</h2>' +
+      '<p class="progress" id="progress"></p>' +
+      '<div class="actions"><button class="btn primary" type="button" id="copy-dev">Copy for dev</button>' +
+      '<button class="btn" type="button" id="copy-linear">Copy for a Linear issue</button></div>' +
+      '<p class="status" id="status" role="status"></p>' +
+      '<textarea id="fallback" hidden aria-label="Text to copy"></textarea></section>';
+
+    app.innerHTML = h;
+    bind();
+  }
+
+  function answerOf(id) {
+    var a = answers[id];
+    if (!a || !Array.isArray(a.picks)) a = answers[id] = { picks: [], detail: '' };
+    return a;
+  }
+  function answered(q) { var a = answerOf(q.id); return a.picks.length > 0 || a.detail.trim() !== ''; }
+
+  function sync() {
+    document.querySelectorAll('.q').forEach(function (qe) {
+      var a = answerOf(qe.dataset.q);
+      qe.querySelectorAll('.opt').forEach(function (oe) {
+        var on = a.picks.indexOf(oe.dataset.o) !== -1;
+        oe.setAttribute('aria-checked', String(on));
+        oe.querySelector('button').setAttribute('aria-checked', String(on));
+      });
+      var ta = qe.querySelector('.q-detail textarea');
+      if (document.activeElement !== ta) ta.value = a.detail;
+    });
+    var total = (data.questions || []).length;
+    var done = (data.questions || []).filter(answered).length;
+    document.getElementById('progress').textContent = done + ' / ' + total + ' question(s) answered.' +
+      (done < total ? ' Unanswered questions are sent as "open".' : '');
+  }
+
+  function bind() {
+    document.querySelectorAll('.q').forEach(function (qe) {
+      var q = data.questions.filter(function (x) { return x.id === qe.dataset.q; })[0];
+      qe.querySelectorAll('.opt').forEach(function (oe) {
+        oe.querySelector('button').addEventListener('click', function () {
+          var a = answerOf(q.id), id = oe.dataset.o, i = a.picks.indexOf(id);
+          if (i !== -1) a.picks.splice(i, 1);
+          else if (q.multi) a.picks.push(id);
+          else a.picks = [id];
+          save(); sync();
+          if (id === '__other' && a.picks.indexOf(id) !== -1) qe.querySelector('.q-detail textarea').focus();
+        });
+      });
+      qe.querySelector('.q-detail textarea').addEventListener('input', function (e) {
+        answerOf(q.id).detail = e.target.value; save(); sync();
+      });
+    });
+    document.getElementById('copy-dev').addEventListener('click', function () { copy(devText(), 'Copied. Paste it into the conversation.'); });
+    document.getElementById('copy-linear').addEventListener('click', function () { copy(linearText(), 'Copied. Paste it into the conversation to create the Linear issue.'); });
+    sync();
+  }
+
+  function labelOf(q, id) {
+    if (id === '__other') return 'Other';
+    var o = (q.options || []).filter(function (x) { return x.id === id; })[0];
+    return o ? o.label : id;
+  }
+  function picksText(q) {
+    return answerOf(q.id).picks.map(function (id) { return labelOf(q, id); }).join(', ');
+  }
+  function bullets(items) { return (items || []).map(function (i) { return '- ' + i; }).join('\n'); }
+
+  function devText() {
+    var out = ['Brainstorm answers: "' + data.title + '"', ''];
+    data.questions.forEach(function (q, i) {
+      var a = answerOf(q.id), detail = a.detail.trim();
+      out.push((i + 1) + '. ' + q.question);
+      if (!answered(q)) out.push('   → (no answer: open)');
+      if (a.picks.length) out.push('   → ' + picksText(q));
+      if (detail) out.push('   Details: ' + detail.replace(/\n+/g, ' '));
+      out.push('');
+    });
+    out.push('Continue the brainstorm with these answers.');
+    return out.join('\n');
+  }
+
+  function linearText() {
+    var p = data.proposal || {}, lin = data.linear || {};
+    var decided = [], open = [];
+    data.questions.forEach(function (q) {
+      var detail = answerOf(q.id).detail.trim().replace(/\n+/g, ' ');
+      if (!answered(q)) { open.push(q.question); return; }
+      var picks = picksText(q);
+      decided.push(q.question + ' ' + (picks && detail ? picks + ' (' + detail + ')' : picks || detail) + '. Settled in the brainstorm' + (data.date ? ' of ' + data.date : '') + '.');
+    });
+    var reqs = (p.items && p.items.length)
+      ? p.items.map(function (it) {
+          return '### ' + it.title + (it.badge ? ' (' + it.badge + ')' : '') + '\n- ' + (it.description || '');
+        }).join('\n\n')
+      : '### Scope\n' + bullets(p.points);
+    var out = [
+      'Create a Linear issue from this brief with the linear-issues skill (brainstorm "' + data.title + '").',
+      'Context for the agent, not part of the issue:',
+      '- Original request: ' + String(data.request || '').replace(/\n+/g, ' '),
+      bullets((data.understanding || []).map(function (u) { return 'Understood: ' + u; })),
+      lin.type || lin.scope ? '- Labels: ' + [lin.type, lin.scope].filter(Boolean).join(', ') : '',
+      lin.outOfScope && lin.outOfScope.length ? bullets(lin.outOfScope.map(function (o) { return 'Out of scope: ' + o; })) : '',
+      open.length ? bullets(open.map(function (o) { return 'Still open, settle before creating: ' + o; })) : '',
+      '',
+      '# ' + data.title,
+      '',
+      '## TL;DR',
+      p.summary || '',
+      '',
+      '## Requirements',
+      reqs,
+      '',
+      '## Acceptance criteria',
+      (lin.acceptance || []).map(function (a) { return '- [ ] ' + a; }).join('\n') || '- [ ] ',
+      '',
+      '## Decisions',
+      bullets(decided) || '- '
+    ];
+    return out.filter(function (l, i, a) { return l !== '' || a[i - 1] !== ''; }).join('\n').replace(/\n{3,}/g, '\n\n');
+  }
+
+  function copy(text, msg) {
+    var st = document.getElementById('status'), fb = document.getElementById('fallback');
+    function manual() {
+      fb.hidden = false; fb.value = text; fb.focus(); fb.select();
+      st.textContent = 'Automatic copy was blocked: the text is selected below, press Cmd+C.';
+    }
+    try {
+      navigator.clipboard.writeText(text).then(function () { fb.hidden = true; st.textContent = msg; }, manual);
+    } catch (e) { manual(); }
+  }
+
+  try {
+    data = JSON.parse(document.getElementById('brainstorm-data').textContent);
+    data.questions = data.questions || [];
+    answers = load();
+    render();
+  } catch (e) {
+    app.innerHTML = '<p class="err">This is the empty template. Build it with <code>node brainstorm.mjs &lt;folder&gt;</code>.</p>';
+  }
+})();
+</script>
+</body>
+</html>
