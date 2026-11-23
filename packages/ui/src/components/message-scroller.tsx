@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@mira/ui/components/button";
 import {
 	MessageScroller as MessageScrollerPrimitive,

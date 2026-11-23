@@ -1,5 +1,3 @@
-"use client";
-
 import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog";
 import { Button } from "@mira/ui/components/button";
 import { cn } from "cn";
