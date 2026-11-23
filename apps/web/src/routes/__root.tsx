@@ -49,7 +49,7 @@ function RootComponent() {
 					<Header />
 					<Outlet />
 				</div>
-				<Toaster richColors />
+				<Toaster />
 			</ThemeProvider>
 			<TanStackRouterDevtools position="bottom-left" />
 		</>
