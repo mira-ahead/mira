@@ -55,4 +55,5 @@ lerna-debug.log*
 next-env.d.ts
 
 !.env.schema
+!.env.test
 /src/env.ts
