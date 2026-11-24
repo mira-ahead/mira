@@ -13,6 +13,7 @@
 		"test": "turbo run test",
 		"dev:web": "turbo run dev -F web --",
 		"dev:server": "turbo run dev -F server --",
+		"setup:workspace": "bash scripts/setup-workspace.sh",
 		"env:generate": "varlock codegen --path ./apps/web/ && varlock codegen --path ./apps/server/",
 		"postinstall": "varlock codegen --path ./apps/web/ && varlock codegen --path ./apps/server/",
 		"check": "biome check --write .",
