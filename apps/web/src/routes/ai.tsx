@@ -62,7 +62,7 @@ function RouteComponent() {
 		e.preventDefault();
 		const text = input.trim();
 		if (!text || isSending) return;
-		sendMessage({ text });
+		void sendMessage({ text });
 		setInput("");
 	};
 
