@@ -1,4 +1,5 @@
 import { Toaster } from "@mira/ui/components/sonner";
+import type { QueryClient } from "@tanstack/react-query";
 import {
 	createRootRouteWithContext,
 	HeadContent,
@@ -6,23 +7,24 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import "../index.css";
 
-export type RouterAppContext = Record<string, never>;
+export type RouterAppContext = {
+	queryClient: QueryClient;
+};
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
 	component: RootComponent,
 	head: () => ({
 		meta: [
 			{
-				title: "mira",
+				title: "Mira",
 			},
 			{
 				name: "description",
-				content: "mira is a web application",
+				content: "Predictive mobility for a more accessible world.",
 			},
 		],
 		links: [
@@ -45,13 +47,13 @@ function RootComponent() {
 				disableTransitionOnChange
 				storageKey="vite-ui-theme"
 			>
-				<div className="grid h-svh grid-rows-[auto_1fr]">
-					<Header />
-					<Outlet />
-				</div>
+				<Outlet />
 				<Toaster />
 			</ThemeProvider>
-			<TanStackRouterDevtools position="bottom-left" />
+			<TanStackRouterDevtools
+				position="top-right"
+				toggleButtonProps={{ style: { top: "auto", bottom: "160px" } }}
+			/>
 		</>
 	);
 }
