@@ -106,6 +106,16 @@
 	},
 	"overrides": [
 		{
+			"includes": ["apps/web/src/routes/**"],
+			"linter": {
+				"rules": {
+					"style": {
+						"useFilenamingConvention": "off"
+					}
+				}
+			}
+		},
+		{
 			"includes": ["packages/ui/src/components/**"],
 			"linter": {
 				"rules": {
