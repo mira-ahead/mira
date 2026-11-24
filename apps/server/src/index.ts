@@ -1,4 +1,5 @@
 import { createMistral } from "@ai-sdk/mistral";
+import { propagateAttributes } from "@langfuse/tracing";
 import {
 	convertToModelMessages,
 	createUIMessageStreamResponse,
@@ -10,6 +11,7 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 
 import { ENV } from "./env.server";
+import { flushTraces } from "./langfuse";
 
 const mistral = createMistral({
 	apiKey: ENV.MISTRAL_API_KEY,
@@ -28,10 +30,17 @@ const app = new Hono()
 	.post("/ai", async (c) => {
 		const body = await c.req.json();
 		const uiMessages = body.messages || [];
-		const result = streamText({
-			model: mistral("mistral-small-latest"),
-			messages: await convertToModelMessages(uiMessages),
-		});
+		const messages = await convertToModelMessages(uiMessages);
+		const result = propagateAttributes({ traceName: "mira-agent" }, () =>
+			streamText({
+				model: mistral("mistral-small-latest"),
+				messages,
+				telemetry: { functionId: "mira-agent" },
+			}),
+		);
+		c.executionCtx.waitUntil(
+			Promise.resolve(result.finishReason).then(flushTraces, flushTraces),
+		);
 
 		return createUIMessageStreamResponse({
 			stream: toUIMessageStream({ stream: result.stream }),
