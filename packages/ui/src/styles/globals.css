@@ -164,6 +164,7 @@
 	font-variant-numeric: tabular-nums;
 }
 
+/* biome-ignore-start lint/complexity/noImportantStyles: the reduced-motion reset must override every animation */
 @media (prefers-reduced-motion: reduce) {
 	*,
 	*::before,
@@ -174,6 +175,7 @@
 		scroll-behavior: auto !important;
 	}
 }
+/* biome-ignore-end lint/complexity/noImportantStyles: end of the reduced-motion reset */
 
 @keyframes mira-shimmer {
 	0% {
