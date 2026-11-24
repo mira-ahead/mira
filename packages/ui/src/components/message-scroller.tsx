@@ -1,4 +1,5 @@
 import { Button } from "@mira/ui/components/button";
+import { ArrowDownIcon } from "@phosphor-icons/react";
 import {
 	MessageScroller as MessageScrollerPrimitive,
 	useMessageScroller,
@@ -6,7 +7,6 @@ import {
 	useMessageScrollerVisibility,
 } from "@shadcn/react/message-scroller";
 import { cn } from "cn";
-import { ArrowDownIcon } from "lucide-react";
 import type * as React from "react";
 
 function MessageScrollerProvider(
