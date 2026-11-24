@@ -1,46 +1,41 @@
 import { cn } from "@mira/ui/lib/utils";
 import { CalendarDotsIcon, GlobeIcon, type Icon } from "@phosphor-icons/react";
 import { Link } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 
 import { MiraAvatar } from "@/components/brand/mira-avatar";
+
+type TabIcon = (state: { active: boolean; className: string }) => ReactNode;
 
 type Tab = {
 	to: "/explore" | "/ask" | "/journeys";
 	label: string;
-	icon: Icon | "mira";
+	icon: TabIcon;
 };
 
-const TABS: readonly Tab[] = [
-	{ to: "/journeys", label: "Journeys", icon: CalendarDotsIcon },
-	{ to: "/explore", label: "Explore", icon: GlobeIcon },
-	{ to: "/ask", label: "Ask Mira", icon: "mira" },
-];
-
-function TabIcon({
-	icon,
-	active,
-	className,
-}: {
-	icon: Tab["icon"];
-	active: boolean;
-	className: string;
-}) {
-	if (icon === "mira") {
-		return (
-			<MiraAvatar
-				className={cn(className, !active && "opacity-90 grayscale-[35%]")}
-			/>
-		);
-	}
-	const TabGlyph = icon;
-	return (
-		<TabGlyph
+const glyph =
+	(Glyph: Icon): TabIcon =>
+	({ active, className }) => (
+		<Glyph
 			aria-hidden
 			weight={active ? "bold" : "regular"}
 			className={cn(className, active && "text-primary")}
 		/>
 	);
-}
+
+const TABS: readonly Tab[] = [
+	{ to: "/journeys", label: "Journeys", icon: glyph(CalendarDotsIcon) },
+	{ to: "/explore", label: "Explore", icon: glyph(GlobeIcon) },
+	{
+		to: "/ask",
+		label: "Ask Mira",
+		icon: ({ active, className }) => (
+			<MiraAvatar
+				className={cn(className, !active && "opacity-90 grayscale-[35%]")}
+			/>
+		),
+	},
+];
 
 export function TabBar({ className }: { className?: string }) {
 	return (
@@ -60,11 +55,7 @@ export function TabBar({ className }: { className?: string }) {
 						>
 							{({ isActive }) => (
 								<span className="group-focus-visible/tab:outline-ring flex flex-col items-center gap-0.5 rounded-xl px-3 py-1 group-focus-visible/tab:outline-3 group-focus-visible/tab:outline-solid">
-									<TabIcon
-										icon={tab.icon}
-										active={isActive}
-										className="size-[22px]"
-									/>
+									{tab.icon({ active: isActive, className: "size-[22px]" })}
 									{tab.label}
 								</span>
 							)}
@@ -88,11 +79,7 @@ export function SegmentedNav({ className }: { className?: string }) {
 						>
 							{({ isActive }) => (
 								<>
-									<TabIcon
-										icon={tab.icon}
-										active={isActive}
-										className="size-4"
-									/>
+									{tab.icon({ active: isActive, className: "size-4" })}
 									{tab.label}
 								</>
 							)}
