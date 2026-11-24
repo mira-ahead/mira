@@ -93,19 +93,19 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@mira/ui/components/tooltip";
-import { createFileRoute } from "@tanstack/react-router";
 import {
 	ArrowUpIcon,
-	ChevronDownIcon,
-	CircleCheckIcon,
-	CircleHelpIcon,
+	CaretDownIcon,
+	CheckCircleIcon,
 	CircleIcon,
-	CircleXIcon,
 	ImageIcon,
 	MapPinIcon,
-	RouteIcon,
+	PathIcon,
+	QuestionIcon,
+	XCircleIcon,
 	XIcon,
-} from "lucide-react";
+} from "@phosphor-icons/react";
+import { createFileRoute } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 
@@ -146,7 +146,7 @@ function UiGallery() {
 						Details
 					</Button>
 					<Button variant="soft" size="sm">
-						<RouteIcon data-icon="inline-start" />
+						<PathIcon data-icon="inline-start" />
 						Switch route
 					</Button>
 					<Button variant="ghost" size="sm">
@@ -164,16 +164,16 @@ function UiGallery() {
 				</Specimen>
 				<Specimen name="badge">
 					<Badge variant="demo" />
-					<Badge variant="success" icon={<CircleCheckIcon />}>
+					<Badge variant="success" icon={<CheckCircleIcon />}>
 						Working
 					</Badge>
-					<Badge variant="danger" icon={<CircleXIcon />}>
+					<Badge variant="danger" icon={<XCircleIcon />}>
 						Out of service
 					</Badge>
 					<Badge variant="warning" icon={<CircleIcon />}>
 						62% likely
 					</Badge>
-					<Badge variant="unknown" icon={<CircleHelpIcon />}>
+					<Badge variant="unknown" icon={<QuestionIcon />}>
 						No recent report
 					</Badge>
 					<Badge variant="outline">Line 14</Badge>
@@ -265,7 +265,7 @@ function UiGallery() {
 						</CardHeader>
 						<CardContent className="grid gap-2">
 							<span>Châtelet → Gare de Lyon</span>
-							<Badge variant="success" icon={<CircleCheckIcon />}>
+							<Badge variant="success" icon={<CheckCircleIcon />}>
 								Elevators working
 							</Badge>
 						</CardContent>
@@ -318,7 +318,7 @@ function UiGallery() {
 					<Collapsible className="w-full border-y">
 						<CollapsibleTrigger className="flex min-h-14 w-full items-center justify-between gap-3 text-left font-semibold [&[data-panel-open]>svg]:rotate-180">
 							Why this route?
-							<ChevronDownIcon className="text-muted-foreground size-5 transition-transform duration-200" />
+							<CaretDownIcon className="text-muted-foreground size-5 transition-transform duration-200" />
 						</CollapsibleTrigger>
 						<CollapsibleContent className="text-muted-foreground pb-4">
 							The recommended route avoids the Gare de Lyon RER elevator, which
@@ -330,7 +330,7 @@ function UiGallery() {
 					<Empty>
 						<EmptyHeader>
 							<EmptyMedia variant="icon">
-								<RouteIcon />
+								<PathIcon />
 							</EmptyMedia>
 							<EmptyTitle>No step-free route yet</EmptyTitle>
 							<EmptyDescription>
