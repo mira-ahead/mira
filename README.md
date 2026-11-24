@@ -56,4 +56,8 @@ Starting in Paris, designed for a more accessible world.
 ```bash
 git clone https://github.com/mira-ahead/mira
 cd mira
+pnpm install
+pnpm dev
 ```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for environment variables, checks, and how we branch, commit and open pull requests.
