@@ -32,14 +32,14 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@mira/ui/components/tooltip";
+import {
+	ArrowClockwiseIcon,
+	ArrowUpIcon,
+	ChatCircleDotsIcon,
+	SpinnerGapIcon,
+} from "@phosphor-icons/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { DefaultChatTransport } from "ai";
-import {
-	ArrowUpIcon,
-	Loader2,
-	MessageCircleDashedIcon,
-	RotateCwIcon,
-} from "lucide-react";
 import { type FormEvent, type KeyboardEvent, useState } from "react";
 import { Streamdown } from "streamdown";
 
@@ -103,7 +103,7 @@ function RouteComponent() {
 										/>
 									}
 								>
-									<RotateCwIcon />
+									<ArrowClockwiseIcon />
 								</TooltipTrigger>
 								<TooltipContent>Reset</TooltipContent>
 							</Tooltip>
@@ -115,7 +115,7 @@ function RouteComponent() {
 						<Empty className="mx-auto h-full max-w-3xl px-4">
 							<EmptyHeader>
 								<EmptyMedia variant="icon">
-									<MessageCircleDashedIcon />
+									<ChatCircleDotsIcon />
 								</EmptyMedia>
 								<EmptyTitle>Morning, mira!</EmptyTitle>
 								<EmptyDescription>
@@ -177,7 +177,7 @@ function RouteComponent() {
 												<MessageBody>
 													<Bubble variant="secondary">
 														<BubbleContent className="flex items-center gap-2">
-															<Loader2 className="size-3.5 animate-spin" />
+															<SpinnerGapIcon className="size-3.5 animate-spin" />
 															<span className="shimmer">Thinking...</span>
 														</BubbleContent>
 													</Bubble>
@@ -217,7 +217,7 @@ function RouteComponent() {
 										className="ml-auto"
 									>
 										{isSending ? (
-											<Loader2 className="animate-spin" />
+											<SpinnerGapIcon className="animate-spin" />
 										) : (
 											<ArrowUpIcon />
 										)}

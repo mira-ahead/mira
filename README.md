@@ -22,7 +22,7 @@
 
 <p align="start">
   <a href="https://luma.com/clickh-mistral-hack-paris">
-    <img src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=400,height=400/uploads/sk/106db1ea-f0c0-4691-a4b3-03d8c03f0c58.jpg" alt="Mistral × ClickHouse Hackathon" width="280">
+    <img src=".github/assets/hackathon.jpg" alt="Mistral × ClickHouse Hackathon" width="220">
   </a>
 </p>
 
@@ -57,11 +57,3 @@ Starting in Paris, designed for a more accessible world.
 git clone https://github.com/mira-ahead/mira
 cd mira
 ```
-
-### Connect the Linear MCP
-
-The repo is set up for [Mistral Vibe](https://docs.mistral.ai/vibe/code/cli/install-setup). Its config, the Linear MCP and the team skills live in `.vibe/`.
-
-1. Run `vibe` at the repo root and trust the folder when asked. Vibe ignores `.vibe/` in an untrusted folder.
-2. Sign in to Linear with `/mcp login linear`.
-3. Check with `/mcp status`. `/skills` lists the repo skills.
