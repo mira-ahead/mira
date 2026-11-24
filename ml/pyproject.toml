@@ -1,0 +1,18 @@
+[project]
+name = "mira-ml"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.5.5",
+    "timestral",
+    "torch>=2.15.0",
+]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+timestral = { git = "https://github.com/mistralai/timestral.git" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
