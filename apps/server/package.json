@@ -6,6 +6,7 @@
 		"dev": "varlock-wrangler dev",
 		"build": "wrangler deploy --dry-run --outdir dist",
 		"check-types": "tsc --noEmit",
+		"test": "NODE_ENV=test varlock run -- vitest run",
 		"deploy": "varlock-wrangler deploy",
 		"cf-typegen": "varlock-wrangler types",
 		"env:generate": "varlock codegen"
@@ -23,6 +24,7 @@
 		"@mira/config": "workspace:*",
 		"@types/node": "catalog:",
 		"typescript": "catalog:",
+		"vitest": "^5.1.1",
 		"wrangler": "4.166.0"
 	}
 }
