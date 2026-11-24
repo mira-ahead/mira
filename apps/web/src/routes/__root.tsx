@@ -40,7 +40,8 @@ function RootComponent() {
 			<HeadContent />
 			<ThemeProvider
 				attribute="class"
-				defaultTheme="dark"
+				defaultTheme="light"
+				forcedTheme="light"
 				disableTransitionOnChange
 				storageKey="vite-ui-theme"
 			>
@@ -48,7 +49,7 @@ function RootComponent() {
 					<Header />
 					<Outlet />
 				</div>
-				<Toaster richColors />
+				<Toaster />
 			</ThemeProvider>
 			<TanStackRouterDevtools position="bottom-left" />
 		</>
