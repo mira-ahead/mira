@@ -1,7 +1,7 @@
 import { Chat, useChat } from "@ai-sdk/react";
 import type { UIMessage } from "ai";
 
-import { chatTransport } from "./transport/chat-transport";
+import { chatTransport } from "../api/chat-transport";
 
 const miraChat = new Chat<UIMessage>({ transport: chatTransport });
 

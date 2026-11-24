@@ -1,6 +1,6 @@
 import { cn } from "@mira/ui/lib/utils";
 
-import type { ApiStatus } from "../transport/api-status";
+import type { ApiStatus } from "../api/get-api-status";
 
 const LABELS = {
 	mock: "Mock replies",

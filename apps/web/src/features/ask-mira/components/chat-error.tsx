@@ -1,7 +1,7 @@
 import { Button } from "@mira/ui/components/button";
 import { WarningCircleIcon } from "@phosphor-icons/react";
 
-import type { ApiStatus } from "../transport/api-status";
+import type { ApiStatus } from "../api/get-api-status";
 
 function describeError(error: Error, apiStatus: ApiStatus) {
 	const isNetworkError = error instanceof TypeError;

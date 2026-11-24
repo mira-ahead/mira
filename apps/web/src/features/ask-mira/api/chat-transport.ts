@@ -1,7 +1,7 @@
 import { type ChatTransport, DefaultChatTransport, type UIMessage } from "ai";
 
 import { ENV } from "@/env";
-import { apiUrl } from "@/lib/api";
+import { apiUrl } from "@/lib/api-client";
 
 import { createMockChatTransport } from "./mock-chat-transport";
 

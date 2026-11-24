@@ -5,7 +5,6 @@ import {
 	HeadContent,
 	Outlet,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -27,12 +26,6 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 				content: "Predictive mobility for a more accessible world.",
 			},
 		],
-		links: [
-			{
-				rel: "icon",
-				href: "/favicon.ico",
-			},
-		],
 	}),
 });
 
@@ -50,10 +43,6 @@ function RootComponent() {
 				<Outlet />
 				<Toaster />
 			</ThemeProvider>
-			<TanStackRouterDevtools
-				position="top-right"
-				toggleButtonProps={{ style: { top: "auto", bottom: "160px" } }}
-			/>
 		</>
 	);
 }

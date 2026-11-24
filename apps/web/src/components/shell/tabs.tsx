@@ -47,7 +47,7 @@ export function TabBar({ className }: { className?: string }) {
 		<nav
 			aria-label="Main"
 			className={cn(
-				"border-border shrink-0 border-t bg-[linear-gradient(180deg,#fffdf9_0%,#f8f1e8_100%)] pb-[env(safe-area-inset-bottom)] shadow-[inset_0_1px_0_rgb(255_255_255/0.9)]",
+				"border-border shrink-0 border-t bg-[linear-gradient(180deg,#fffdf9_0%,#f8f1e8_100%)] pr-[env(safe-area-inset-right)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] shadow-[inset_0_1px_0_rgb(255_255_255/0.9)]",
 				className,
 			)}
 		>

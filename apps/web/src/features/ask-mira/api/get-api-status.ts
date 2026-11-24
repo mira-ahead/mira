@@ -1,12 +1,12 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-import { apiUrl } from "@/lib/api";
+import { apiUrl } from "@/lib/api-client";
 
 import { isMockChat } from "./chat-transport";
 
 export type ApiStatus = "mock" | "checking" | "online" | "offline";
 
-const apiStatusQuery = queryOptions({
+export const apiStatusQueryOptions = queryOptions({
 	queryKey: ["api", "status"],
 	queryFn: async ({ signal }) => {
 		const response = await fetch(apiUrl("/"), { signal });
@@ -19,7 +19,7 @@ const apiStatusQuery = queryOptions({
 });
 
 export function useApiStatus(): ApiStatus {
-	const { isSuccess, isError } = useQuery(apiStatusQuery);
+	const { isSuccess, isError } = useQuery(apiStatusQueryOptions);
 	if (isMockChat) return "mock";
 	if (isSuccess) return "online";
 	if (isError) return "offline";

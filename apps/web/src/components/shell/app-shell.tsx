@@ -13,7 +13,7 @@ export function AppShell() {
 			>
 				Skip to content
 			</a>
-			<div className="lg:rounded-panel lg:shadow-panel bg-background flex min-h-0 flex-1 flex-col lg:absolute lg:inset-y-4 lg:left-4 lg:w-[400px] lg:overflow-hidden">
+			<div className="lg:rounded-panel lg:shadow-panel bg-background flex min-h-0 flex-1 flex-col pr-[env(safe-area-inset-right)] pl-[env(safe-area-inset-left)] lg:absolute lg:inset-y-4 lg:left-4 lg:w-[400px] lg:overflow-hidden lg:px-0">
 				<header className="hidden shrink-0 border-b px-3 py-2 lg:block">
 					<div className="flex h-11 items-center pl-2">
 						<Link to="/journeys" className="pressable rounded-lg">

@@ -11,7 +11,7 @@ import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react";
 
 import { MiraAvatar } from "@/components/brand/mira-avatar";
 import { ScreenHeader } from "@/components/shell/screen-header";
-
+import { useApiStatus } from "./api/get-api-status";
 import { ChatComposer } from "./components/chat-composer";
 import { ChatError } from "./components/chat-error";
 import {
@@ -20,8 +20,7 @@ import {
 	UserMessage,
 } from "./components/chat-messages";
 import { ConnectionStatus } from "./components/connection-status";
-import { useApiStatus } from "./transport/api-status";
-import { messageText, useMiraChat } from "./use-mira-chat";
+import { messageText, useMiraChat } from "./hooks/use-mira-chat";
 
 const WELCOME = "Hi, I'm Mira. Ask me anything about getting around Paris.";
 
@@ -64,7 +63,7 @@ export function AskMiraScreen() {
 					<MessageScrollerViewport>
 						<MessageScrollerContent
 							aria-label="Conversation with Mira"
-							aria-busy={chat.isBusy}
+							aria-live="off"
 							className="gap-6 px-5 py-5"
 						>
 							<MessageScrollerItem>
