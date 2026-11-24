@@ -15,7 +15,7 @@
 		"@ai-sdk/mistral": "^4.0.89",
 		"@varlock/cloudflare-integration": "^1.6.4",
 		"ai": "catalog:",
-		"hono": "^4.13.18",
+		"hono": "catalog:",
 		"varlock": "catalog:",
 		"zod": "catalog:"
 	},
