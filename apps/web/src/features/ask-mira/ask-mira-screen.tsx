@@ -12,6 +12,7 @@ import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react";
 import { MiraAvatar } from "@/components/brand/mira-avatar";
 import { ScreenHeader } from "@/components/shell/screen-header";
 import { useApiStatus } from "./api/get-api-status";
+import { CHAT_STATUS } from "./chat-status";
 import { ChatComposer } from "./components/chat-composer";
 import { ChatError } from "./components/chat-error";
 import {
@@ -31,8 +32,11 @@ export function AskMiraScreen() {
 
 	const announcement = (() => {
 		if (chat.isWaitingForFirstToken) return "Mira is thinking";
-		if (chat.status === "streaming") return "Mira is answering";
-		if (chat.status === "ready" && lastMessage?.role === "assistant") {
+		if (chat.status === CHAT_STATUS.STREAMING) return "Mira is answering";
+		if (
+			chat.status === CHAT_STATUS.READY &&
+			lastMessage?.role === "assistant"
+		) {
 			return `Mira said: ${messageText(lastMessage)}`;
 		}
 		return "";
@@ -84,7 +88,8 @@ export function AskMiraScreen() {
 									<MessageScrollerItem key={message.id}>
 										<AssistantMessage
 											isStreaming={
-												chat.status === "streaming" && message === lastMessage
+												chat.status === CHAT_STATUS.STREAMING &&
+												message === lastMessage
 											}
 										>
 											{text}

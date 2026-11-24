@@ -2,6 +2,7 @@ import { Chat, useChat } from "@ai-sdk/react";
 import type { UIMessage } from "ai";
 
 import { chatTransport } from "../api/chat-transport";
+import { CHAT_STATUS } from "../chat-status";
 
 const miraChat = new Chat<UIMessage>({ transport: chatTransport });
 
@@ -23,11 +24,12 @@ export function useMiraChat() {
 		clearError,
 	} = useChat({ chat: miraChat });
 
-	const isBusy = status === "submitted" || status === "streaming";
+	const isBusy =
+		status === CHAT_STATUS.SUBMITTED || status === CHAT_STATUS.STREAMING;
 	const lastMessage = messages.at(-1);
 	const isWaitingForFirstToken =
-		status === "submitted" ||
-		(status === "streaming" &&
+		status === CHAT_STATUS.SUBMITTED ||
+		(status === CHAT_STATUS.STREAMING &&
 			lastMessage?.role === "assistant" &&
 			messageText(lastMessage) === "");
 
