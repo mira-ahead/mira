@@ -28,3 +28,7 @@ if (!rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);
 	root.render(<RouterProvider router={router} />);
 }
+
+const ciRedCheck: number = "x";
+
+export { ciRedCheck };
