@@ -17,6 +17,7 @@
 		"env:generate": "varlock codegen --path ./apps/web/ && varlock codegen --path ./apps/server/",
 		"postinstall": "varlock codegen --path ./apps/web/ && varlock codegen --path ./apps/server/",
 		"check": "biome check --write .",
+		"archive:workspace": "bash scripts/archive-workspace.sh",
 		"prepare": "husky",
 		"deploy": "turbo run deploy"
 	},
