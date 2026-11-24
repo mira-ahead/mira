@@ -15,32 +15,30 @@ const mistral = createMistral({
 	apiKey: ENV.MISTRAL_API_KEY,
 });
 
-const app = new Hono();
+const app = new Hono()
+	.use(logger())
+	.use(
+		"/*",
+		cors({
+			origin: ENV.CORS_ORIGIN,
+			allowMethods: ["GET", "POST", "OPTIONS"],
+		}),
+	)
+	.get("/health", (c) => c.json({ status: "ok" }))
+	.post("/ai", async (c) => {
+		const body = await c.req.json();
+		const uiMessages = body.messages || [];
+		const result = streamText({
+			model: mistral("mistral-small-latest"),
+			messages: await convertToModelMessages(uiMessages),
+		});
 
-app.use(logger());
-app.use(
-	"/*",
-	cors({
-		origin: ENV.CORS_ORIGIN,
-		allowMethods: ["GET", "POST", "OPTIONS"],
-	}),
-);
+		return createUIMessageStreamResponse({
+			stream: toUIMessageStream({ stream: result.stream }),
+		});
+	})
+	.get("/", (c) => c.text("OK"));
 
-app.post("/ai", async (c) => {
-	const body = await c.req.json();
-	const uiMessages = body.messages || [];
-	const result = streamText({
-		model: mistral("mistral-small-latest"),
-		messages: await convertToModelMessages(uiMessages),
-	});
-
-	return createUIMessageStreamResponse({
-		stream: toUIMessageStream({ stream: result.stream }),
-	});
-});
-
-app.get("/", (c) => {
-	return c.text("OK");
-});
+export type AppType = typeof app;
 
 export default app;
