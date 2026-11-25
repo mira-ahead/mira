@@ -13,6 +13,7 @@
 	},
 	"dependencies": {
 		"@ai-sdk/mistral": "^4.0.89",
+		"@clickhouse/client-web": "1.25.0",
 		"@langfuse/otel": "^6.1.1",
 		"@langfuse/tracing": "^6.1.1",
 		"@langfuse/vercel-ai-sdk": "^6.1.1",

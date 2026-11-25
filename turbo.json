@@ -33,6 +33,9 @@
 	},
 	"globalEnv": [
 		"CI",
+		"CLICKHOUSE_PASSWORD",
+		"CLICKHOUSE_URL",
+		"CLICKHOUSE_USER",
 		"CORS_ORIGIN",
 		"MISTRAL_API_KEY",
 		"NODE_ENV",
