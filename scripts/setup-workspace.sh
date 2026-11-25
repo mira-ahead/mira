@@ -12,7 +12,7 @@ copied=0
 if [ "$main" != "$root" ]; then
 	while IFS= read -r file; do
 		file="${file#./}"
-		[ "$(basename "$file")" = ".env" ] && continue
+		[ "$(basename "$file")" = ".env.development" ] && continue
 		git -C "$main" check-ignore -q "$file" || continue
 		if [ -e "$root/$file" ]; then
 			echo "  kept    $file (already here)"
@@ -31,7 +31,7 @@ read_port() { [ -f "$2" ] && sed -n "s/^$1=//p" "$2" | head -1 || true; }
 used_ports() {
 	git worktree list --porcelain | sed -n 's/^worktree //p' | while IFS= read -r worktree; do
 		[ "$worktree" = "$root" ] && continue
-		cat "$worktree"/apps/server/.env "$worktree"/apps/web/.env 2>/dev/null || true
+		cat "$worktree"/apps/server/.env.development "$worktree"/apps/web/.env.development 2>/dev/null || true
 	done | sed -nE 's/^(SERVER|WEB)_PORT=([0-9]+)$/\2/p'
 }
 
@@ -49,18 +49,18 @@ pick_port() {
 	exit 1
 }
 
-server_port="$(read_port SERVER_PORT "$root/apps/server/.env")"
-web_port="$(read_port WEB_PORT "$root/apps/web/.env")"
+server_port="$(read_port SERVER_PORT "$root/apps/server/.env.development")"
+web_port="$(read_port WEB_PORT "$root/apps/web/.env.development")"
 server_port="${server_port:-$(pick_port 3001 4000)}"
 web_port="${web_port:-$(pick_port 5174 6000)}"
 
-cat >"$root/apps/server/.env" <<EOF
+cat >"$root/apps/server/.env.development" <<EOF
 # Written by scripts/setup-workspace.sh, ports of this worktree.
 SERVER_PORT=$server_port
 CORS_ORIGIN=http://localhost:$web_port
 EOF
 
-cat >"$root/apps/web/.env" <<EOF
+cat >"$root/apps/web/.env.development" <<EOF
 # Written by scripts/setup-workspace.sh, ports of this worktree.
 WEB_PORT=$web_port
 VITE_SERVER_URL=http://localhost:$server_port

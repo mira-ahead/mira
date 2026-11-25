@@ -56,6 +56,8 @@ Starting in Paris, designed for a more accessible world.
 ```bash
 git clone https://github.com/mira-ahead/mira
 cd mira
+pnpm install
+pnpm dev
 ```
 
-In a new git worktree, run `pnpm setup:workspace` before `pnpm dev`. It copies the `.env.local` files from the main checkout and gives the worktree its own API and web ports, so several worktrees can run at once.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for environment variables, checks, and how we branch, commit and open pull requests.
