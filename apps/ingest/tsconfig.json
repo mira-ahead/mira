@@ -1,0 +1,6 @@
+{
+	"extends": "@mira/config/tsconfig.base.json",
+	"compilerOptions": {
+		"noEmit": true
+	}
+}

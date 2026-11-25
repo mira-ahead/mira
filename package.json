@@ -14,8 +14,8 @@
 		"dev:web": "turbo run dev -F web --",
 		"dev:server": "turbo run dev -F server --",
 		"setup:workspace": "bash scripts/setup-workspace.sh",
-		"env:generate": "varlock codegen --path ./apps/web/ && varlock codegen --path ./apps/server/",
-		"postinstall": "varlock codegen --path ./apps/web/ && varlock codegen --path ./apps/server/",
+		"env:generate": "varlock codegen --path ./apps/web/ && varlock codegen --path ./apps/server/ && varlock codegen --path ./apps/ingest/",
+		"postinstall": "varlock codegen --path ./apps/web/ && varlock codegen --path ./apps/server/ && varlock codegen --path ./apps/ingest/",
 		"check": "biome check --write .",
 		"prepare": "husky",
 		"deploy": "turbo run deploy"

@@ -33,7 +33,11 @@
 	},
 	"globalEnv": [
 		"CI",
+		"CLICKHOUSE_PASSWORD",
+		"CLICKHOUSE_URL",
+		"CLICKHOUSE_USER",
 		"CORS_ORIGIN",
+		"IDFM_API_KEY",
 		"MISTRAL_API_KEY",
 		"NODE_ENV",
 		"VITE_CHAT_MOCK",

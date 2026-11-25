@@ -1,0 +1,23 @@
+{
+	"name": "ingest",
+	"type": "module",
+	"main": "src/index.ts",
+	"scripts": {
+		"dev": "varlock-wrangler dev --test-scheduled",
+		"build": "wrangler deploy --dry-run --outdir dist",
+		"check-types": "tsc --noEmit",
+		"deploy": "varlock-wrangler deploy",
+		"env:generate": "varlock codegen"
+	},
+	"dependencies": {
+		"@varlock/cloudflare-integration": "^1.6.4",
+		"varlock": "catalog:"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "catalog:",
+		"@mira/config": "workspace:*",
+		"@types/node": "catalog:",
+		"typescript": "catalog:",
+		"wrangler": "4.166.0"
+	}
+}

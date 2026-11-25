@@ -1,0 +1,8 @@
+dist/
+.wrangler
+node_modules/
+.env*
+!.env.example
+!.env.schema
+.dev.vars
+/src/env.ts

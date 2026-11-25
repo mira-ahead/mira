@@ -1,0 +1,15 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "mira-ingest",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-11-19",
+	"compatibility_flags": ["nodejs_compat"],
+	"workers_dev": false,
+	"preview_urls": false,
+	"triggers": {
+		// UTC slots covering 9h, 14h and 20h in Paris for both winter and summer time.
+		"crons": ["35 7,8,12,13,18,19 * * *"]
+	},
+	"observability": { "enabled": true },
+	"upload_source_maps": true
+}
