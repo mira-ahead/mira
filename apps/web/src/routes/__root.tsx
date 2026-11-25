@@ -6,6 +6,7 @@ import {
 	Outlet,
 } from "@tanstack/react-router";
 
+import { ErrorScreen } from "@/components/shell/error-screen";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import "../index.css";
@@ -16,6 +17,10 @@ export type RouterAppContext = {
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
 	component: RootComponent,
+	notFoundComponent: () => <ErrorScreen variant="not-found" />,
+	errorComponent: ({ reset }) => (
+		<ErrorScreen variant="error" onRetry={reset} />
+	),
 	head: () => ({
 		meta: [
 			{
